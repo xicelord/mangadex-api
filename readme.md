@@ -1,23 +1,23 @@
-#mangadex-api
+# mangadex-api
 This is a NodeJS-application intended to be used as an API for mangadex.  
 It is not recommended to run it in production currently.  
 A lot of features are not implemented as of now and the methods probably will changed in the future.
 Currently it only supports public read-only access without any user-authentication.
 
-##Warnings
+## Warnings
 The responses from the API are unescaped! Do NOT simpy load the content into a html-tag, make sure to [sanitize](https://github.com/yahoo/xss-filters) it first.
 
-##Notes
+## Notes
 This API is based on an old version of the sql-schema of mangadex and some features may not be working as of now.
 
-##Todo
+## Todo
 -List chapters of frontpage, manga, user, group, follows, ...
 -Anything write-related
 -...
 
-##Documentation
+## Documentation
 
-###/api/v1/manga/:type/:mid
+### /api/v1/manga/:type/:mid
 Get the info of a manga. `:type` is to be replaced by `md`(Mangadex),`mu`(Mangaupdates) or `mal`(MyAnimeList) and specified the type of id supplied.
 `mid` is to be replaced by the id manga.  
 A result looks like this:
@@ -51,7 +51,7 @@ A result looks like this:
 }
 ```
 
-###/api/v1/group/:gid
+### /api/v1/group/:gid
 `gid` is to be replaced by the id of the group you want to access.  
 A result looks like this:
 ```json
@@ -106,7 +106,7 @@ A result looks like this:
 }
 ```
 
-###/api/v1/user/:uid
+### /api/v1/user/:uid
 `uid` is to be replaced by the id of the user you want to access.  
 A result looks like this:
 ```json
