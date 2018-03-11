@@ -131,7 +131,7 @@ A result looks like this:
 }
 ```
 
-###/api/v1/chapter/:cid
+### /api/v1/chapter/:cid
 `cid` is to be replaced by the id of the chapter you want to access.  
 A result looks like this:
 ```json
