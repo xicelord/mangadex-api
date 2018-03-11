@@ -11,8 +11,8 @@ The responses from the API are unescaped! Do NOT simpy load the content into a h
 This API is based on an old version of the sql-schema of mangadex and some features may not be working as of now.
 
 ## Todo
--List chapters of frontpage, manga, user, group, follows, ...
--Anything write-related
+-List chapters of frontpage, manga, user, group, follows, ...  
+-Anything write-related  
 -...
 
 ## Documentation
