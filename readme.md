@@ -171,8 +171,8 @@ A result looks like this:
 ```
 
 ### /api/v1/chapters/:origin/:id?lang_ids=&adult=&limit=&offset=
-`origin` is to be replaced by the resource you want to access (group, manga).  
-`id` is to be replaced by the id of the resource you want to access.  
+`origin` is to be replaced by the resource you want to access (group, user, manga, frontpage).  
+`id` is to be replaced by the id of the resource you want to access. If you you want to access the frontpage set it to a valid number or omit `/:id` altogether
 `lang_ids` (optional) -> List of the language-ids you want (example: 1,2,3)  
 `adult` (optional, default: 0) -> Show chapters of adult-mangas (1 = show)  
 `limit` (optional, default: 100) -> Maximum amount of chapters (example: 25)  
