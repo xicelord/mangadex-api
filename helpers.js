@@ -19,7 +19,7 @@ module.exports = {
   },
 
   filterChaptersOrigin: function(value) {
-    let valid_values = ['group', 'manga'];
+    let valid_values = ['group', 'manga', 'user'];
     if (valid_values.includes(value))
       return value;
     else

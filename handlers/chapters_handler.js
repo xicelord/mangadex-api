@@ -114,6 +114,8 @@ module.exports = (app, db, config) => {
             switch(origin) {
               case 'group':
                 return '(mangadex_chapters.group_id = ' + id + ' OR mangadex_chapters.group_id_2 = ' + id + ' OR mangadex_chapters.group_id_3 = ' + id + ') ';
+              case 'user':
+                return 'mangadex_users.user_id = ' + id + ' ';
               case 'manga':
                 return 'mangadex_mangas.manga_id = ' + id + ' ';
             }
