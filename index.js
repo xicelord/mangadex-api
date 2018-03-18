@@ -28,12 +28,14 @@ connection.connect(function(err) {
   const user_handler = require('./handlers/user_handler.js');
   const manga_handler = require('./handlers/manga_handler.js');
   const chapter_handler = require('./handlers/chapter_handler.js');
+  const chapters_handler = require('./handlers/chapters_handler.js');
 
   //Register handlers with express
   group_handler(app, connection, config);
   user_handler(app, connection, config);
   manga_handler(app, connection, config);
   chapter_handler(app, connection, config);
+  chapters_handler(app, connection, config);
 
   //Start listening
   app.listen(3000)

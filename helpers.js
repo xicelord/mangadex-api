@@ -16,5 +16,26 @@ module.exports = {
       default:
         return null;
     }
+  },
+
+  filterChaptersOrigin: function(value) {
+    if (value === 'group' || value === 'manga')
+      return value;
+    else
+      return null;
+  },
+
+  filterLanguageIDs: function(value) {
+    let lang_ids = [];
+
+    //Filter out non-integers
+    value.split(',').forEach((lang_id) => {
+      let filtered = module.exports.filterInt(lang_id);
+
+      if (!isNaN(filtered))
+        lang_ids.push(filtered);
+    });
+
+    return lang_ids.join(',');
   }
 }
