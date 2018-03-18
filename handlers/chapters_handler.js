@@ -65,9 +65,9 @@ function compile_get_chapters(db_chapter_results) {
 //Export
 module.exports = (app, db, config) => {
   //GET - info about group
-  app.get(config.endpoint + 'chapters/:origin/:id', (req, res) => {
+  app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], (req, res) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
-    let id = helpers.filterInt(req.params.id);
+    let id = (origin === 'frontpage' ? 0 : helpers.filterInt(req.params.id));
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
@@ -118,6 +118,8 @@ module.exports = (app, db, config) => {
                 return 'mangadex_users.user_id = ' + id + ' ';
               case 'manga':
                 return 'mangadex_mangas.manga_id = ' + id + ' ';
+              case 'frontpage':
+                return '1=1 ';
             }
           })() +
         'ORDER BY ' + order + ' ' +
