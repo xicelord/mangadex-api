@@ -11,7 +11,6 @@ The responses from the API are unescaped! Do NOT simpy load the content into a h
 This API is based on an old version of the sql-schema of mangadex and some features may not be working as of now.
 
 ## Todo
--List chapters of frontpage, manga, user, group, follows, ...  
 -Anything write-related  
 -...
 
@@ -169,4 +168,50 @@ A result looks like this:
         "https://mangadex.org/data/a46abb0353417441f270c11f13f65238/x1.png"
     ]
 }
+```
+
+### /api/v1/chapters/:origin/:id?lang_ids=&adult=&limit=&offset=
+`origin` is to be replaced by the resource you want to access (group, manga).  
+`id` is to be replaced by the id of the resource you want to access.  
+`lang_ids` (optional) -> List of the language-ids you want (example: 1,2,3)
+`adult` (optional, default: 0) -> Show chapters of adult-mangas (1 = show)
+`limit` (optional, default: 100) -> Maximum amount of chapters (example: 25)
+`offset` (optional, default: 0) -> Skip x chapters (example: 100)
+A result looks like this:
+```json
+[
+    {
+        "id": 13,
+        "volume": "1",
+        "chapter": "2",
+        "title": "gg",
+        "manga": {
+            "id": 1,
+            "name": "Amentia",
+            "cover": "jpg",
+            "adult": 1
+        },
+        "upload_timestamp": 1520716818,
+        "authorised": 0,
+        "group": {
+            "id": 1941,
+            "name": "test_group_1"
+        },
+        "group2": null,
+        "group3": null,
+        "language": {
+            "id": 1,
+            "name": "English",
+            "flag": "us"
+        },
+        "user": {
+            "id": 20986,
+            "username": "icelord",
+            "level": {
+                "name": "admin",
+                "color": "100"
+            }
+        }
+    }
+]
 ```
