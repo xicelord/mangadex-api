@@ -15,6 +15,9 @@ const config = {
   endpoint: '/api/v1/'
 }
 
+//Disable X-Powered-By-header
+app.disable('x-powered-by');
+
 connection.connect(function(err) {
   if (err) {
     console.error('Error connecting to db: ' + err.stack);
