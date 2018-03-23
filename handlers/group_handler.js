@@ -84,9 +84,9 @@ function compile_get_group(db_group_result, db_members_results) {
 }
 
 //Export
-module.exports = (app, db, config) => {
+module.exports = (app, db, cache, config) => {
   //GET - info about group
-  app.get(config.endpoint + 'group/:gid', (req, res) => {
+  app.get(config.endpoint + 'group/:gid', helpers.handleCaching(config, 'get:group', cache), (req, res) => {
     let gid = helpers.filterInt(req.params.gid);
 
     if (isNaN(gid)) {

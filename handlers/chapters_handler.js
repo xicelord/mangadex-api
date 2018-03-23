@@ -63,9 +63,9 @@ function compile_get_chapters(db_chapter_results) {
 }
 
 //Export
-module.exports = (app, db, config) => {
+module.exports = (app, db, cache, config) => {
   //GET - info about group
-  app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], (req, res) => {
+  app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], helpers.handleCaching(config, 'get:chapters', cache), (req, res) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
     let id = (origin === 'frontpage' ? 0 : helpers.filterInt(req.params.id));
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');

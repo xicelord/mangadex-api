@@ -35,9 +35,9 @@ function compile_get_manga(db_manga_result) {
 }
 
 //Export
-module.exports = (app, db, config) => {
+module.exports = (app, db, cache, config) => {
   //GET - info about group
-  app.get(config.endpoint + 'manga/:type/:mid', (req, res) => {
+  app.get(config.endpoint + 'manga/:type/:mid', helpers.handleCaching(config, 'get:manga', cache), (req, res) => {
     let type = helpers.filterMangaIdType(req.params.type);
     let mid = helpers.filterInt(req.params.mid);
 

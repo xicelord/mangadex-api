@@ -64,9 +64,9 @@ function compile_get_chapter(db_chapter_result) {
 }
 
 //Export
-module.exports = (app, db, config) => {
+module.exports = (app, db, cache, config) => {
   //GET - info about group
-  app.get(config.endpoint + 'chapter/:cid', (req, res) => {
+  app.get(config.endpoint + 'chapter/:cid', helpers.handleCaching(config, 'get:chapter', cache), (req, res) => {
     let cid = helpers.filterInt(req.params.cid);
 
     if (isNaN(cid)) {

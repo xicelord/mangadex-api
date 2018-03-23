@@ -38,5 +38,22 @@ module.exports = {
     });
 
     return lang_ids.join(',');
+  },
+
+  handleCaching: function(config, resourceTitle, cache) {
+    //Is caching disabled in general?
+    if (!config.cacheFor || !config.cacheFor[resourceTitle]) {
+      //Skip redis-cache
+      return (req, res, next) => {
+        next();
+      }
+    } else {
+      //Pass-through to redis-cache
+      return (req, res, next) => {
+        cache.route({
+          expire: config.cacheFor[resourceTitle]
+        })(req, res, next);
+      };
+    }
   }
 }
