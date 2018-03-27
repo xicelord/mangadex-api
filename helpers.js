@@ -41,7 +41,7 @@ module.exports = {
   },
 
   handleCaching: function(config, resourceTitle, cache) {
-    //Is caching disabled in general?
+    //Is caching disabled?
     if (!config.cacheFor || !config.cacheFor[resourceTitle]) {
       //Skip redis-cache
       return (req, res, next) => {
@@ -49,11 +49,9 @@ module.exports = {
       }
     } else {
       //Pass-through to redis-cache
-      return (req, res, next) => {
-        cache.route({
-          expire: config.cacheFor[resourceTitle]
-        })(req, res, next);
-      };
+      return cache.route({
+        expire: config.cacheFor[resourceTitle]
+      });
     }
   }
 }

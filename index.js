@@ -27,7 +27,7 @@ const config = {
 app.disable('x-powered-by');
 
 //Make sure the cache being unavailable doesn't crash the application
-cache.on('error', (error) => {});
+cache.on('error', (error) => { });
 
 connection.connect(function(err) {
   if (err) {
