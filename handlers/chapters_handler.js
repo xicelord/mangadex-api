@@ -67,12 +67,12 @@ module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], helpers.handleCaching(config, 'get:chapters', cache), (req, res) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
-    let id = (origin === 'frontpage' ? 0 : helpers.filterInt(req.params.id));
+    let id = (origin === 'frontpage' ? 0 : helpers.filterPositiveInt(req.params.id));
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
-    let limit = helpers.filterInt(req.query.limit) || 100;
-    let offset = helpers.filterInt(req.query.offset) || 0;
+    let limit = helpers.filterPositiveInt(req.query.limit) || 100;
+    let offset = helpers.filterPositiveInt(req.query.offset) || 0;
 
     if (origin === null) {
       return res.status(400).json({

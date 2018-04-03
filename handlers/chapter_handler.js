@@ -67,7 +67,7 @@ function compile_get_chapter(db_chapter_result) {
 module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get(config.endpoint + 'chapter/:cid', helpers.handleCaching(config, 'get:chapter', cache), (req, res) => {
-    let cid = helpers.filterInt(req.params.cid);
+    let cid = helpers.filterPositiveInt(req.params.cid);
 
     if (isNaN(cid)) {
       return res.status(400).json({

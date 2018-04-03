@@ -27,7 +27,7 @@ function compile_get_user(db_user_result) {
 module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get(config.endpoint + 'user/:uid', helpers.handleCaching(config, 'get:user', cache), (req, res) => {
-    let uid = helpers.filterInt(req.params.uid);
+    let uid = helpers.filterPositiveInt(req.params.uid);
 
     if (isNaN(uid)) {
       return res.status(400).json({

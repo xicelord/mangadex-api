@@ -39,7 +39,7 @@ module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get(config.endpoint + 'manga/:type/:mid', helpers.handleCaching(config, 'get:manga', cache), (req, res) => {
     let type = helpers.filterMangaIdType(req.params.type);
-    let mid = helpers.filterInt(req.params.mid);
+    let mid = helpers.filterPositiveInt(req.params.mid);
 
     if (type === null) {
       return res.status(400).json({

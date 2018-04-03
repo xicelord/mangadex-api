@@ -1,5 +1,5 @@
 module.exports = {
-  filterInt: function(value) {
+  filterPositiveInt: function(value) {
     if (/^([0-9]+)$/.test(value))
       return Number(value);
     return NaN;
