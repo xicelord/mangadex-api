@@ -31,7 +31,7 @@ module.exports = {
 
     //Filter out non-integers
     value.split(',').forEach((lang_id) => {
-      let filtered = module.exports.filterInt(lang_id);
+      let filtered = module.exports.filterPositiveInt(lang_id);
 
       if (!isNaN(filtered))
         lang_ids.push(filtered);

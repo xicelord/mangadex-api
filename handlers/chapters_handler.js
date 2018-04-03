@@ -71,8 +71,9 @@ module.exports = (app, db, cache, config) => {
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
-    let limit = helpers.filterPositiveInt(req.query.limit) || 100;
-    let offset = helpers.filterPositiveInt(req.query.offset) || 0;
+    let limit = 250;
+    let page = (helpers.filterPositiveInt(req.query.page) || 1) >= 1 ? (helpers.filterPositiveInt(req.query.page) || 1) -1 : 0;
+    let offset = limit * page;
 
     if (origin === null) {
       return res.status(400).json({
