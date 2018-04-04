@@ -4,6 +4,7 @@ const helpers = require('../helpers.js');
 function compile_get_group(db_group_result, db_members_results) {
   //Prepare result
   return {
+    error: null,
     id: db_group_result.group_id,
     name: db_group_result.group_name,
     website: db_group_result.group_website,
