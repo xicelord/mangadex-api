@@ -48,7 +48,7 @@ module.exports = {
         next();
       }
     } else {
-      //Return to cache-route
+      //Use redis-cache
       return cache.withTtl(config.cacheFor[resourceTitle]);
     }
   }

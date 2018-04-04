@@ -3,6 +3,7 @@ const helpers = require('../helpers.js');
 //Result functions
 function compile_get_chapter(db_chapter_result) {
   return {
+    error: null,
     id: db_chapter_result.chapter_id,
     manga: {
       id: db_chapter_result.manga_id,
@@ -73,7 +74,7 @@ module.exports = (app, db, cache, config) => {
       return res.status(400).json({
         error: {
           code: 1, //TODO
-          message: 'Invalid user-id'
+          message: 'Invalid chapter-id'
         }
       });
     }
@@ -100,12 +101,22 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Chapter found? Is deleted?
-        if (db_chapter_results.length === 0 || db_chapter_results[0].chapter_deleted) {
+        //Not found?
+        if (db_chapter_results.length === 0) {
           return res.status(404).json({
             error: {
               code: 1, //TODO
               message: 'Chapter could not be found'
+            }
+          });
+        }
+
+        //Deleted?
+        if (db_chapter_results[0].chapter_deleted) {
+          return res.status(403).json({
+            error: {
+              code: 1, //TODO
+              message: 'Chapter has been deleted'
             }
           });
         }

@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '123456',
-  database : 'mangadex'
+  database : (process.env.NODE_ENV === 'production' ? 'mangadex' : 'mangadex-dev')
 });
 const cache = require('express-expeditious')({
   namespace: 'mangadexapi',
@@ -42,6 +42,7 @@ app.use(cache);
 //Disable X-Powered-By-header
 app.disable('x-powered-by');
 
+//Connect to mysql-db
 connection.connect(function(err) {
   if (err) {
     console.error('Error connecting to db: ' + err.stack);
@@ -67,3 +68,6 @@ connection.connect(function(err) {
   //Start listening
   app.listen(3000)
 });
+
+//Export app for tests
+module.exports = app;
