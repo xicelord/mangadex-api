@@ -3,6 +3,7 @@ const helpers = require('../helpers.js');
 //Result functions
 function compile_get_manga(db_manga_result) {
   return {
+    error: null,
     id: db_manga_result.manga_id,
     name: db_manga_result.manga_name,
     alt_names: (() => {

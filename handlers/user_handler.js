@@ -3,6 +3,7 @@ const helpers = require('../helpers.js');
 //Result functions
 function compile_get_user(db_user_result) {
   return {
+    error: null,
     id: db_user_result.user_id,
     username: db_user_result.username,
     avatar: db_user_result.avatar,
