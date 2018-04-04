@@ -8,8 +8,10 @@ function compile_get_group(db_group_result, db_members_results) {
     id: db_group_result.group_id,
     name: db_group_result.group_name,
     website: db_group_result.group_website,
-    irc_server: db_group_result.group_irc_server,
-    irc_channel: db_group_result.group_irc_channel,
+    irc: {
+      server: db_group_result.group_irc_server,
+      channel: db_group_result.group_irc_channel
+    },
     discord: db_group_result.group_discord,
     email: db_group_result.group_email,
     language: {
