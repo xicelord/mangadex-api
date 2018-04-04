@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "expeditious-engine-redis": "^0.1.1",
     "express": "^4.16.2",
-    "express-redis-cache": "^1.1.1",
+    "express-expeditious": "^3.2.1",
     "mysql": "^2.15.0"
   }
 }

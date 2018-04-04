@@ -48,10 +48,8 @@ module.exports = {
         next();
       }
     } else {
-      //Pass-through to redis-cache
-      return cache.route({
-        expire: config.cacheFor[resourceTitle]
-      });
+      //Return to cache-route
+      return cache.withTtl(config.cacheFor[resourceTitle]);
     }
   }
 }

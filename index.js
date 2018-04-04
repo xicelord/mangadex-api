@@ -2,13 +2,26 @@
 const express = require('express');
 const app = express();
 const helpers = require('./helpers.js');
-const cache = require('express-redis-cache')();
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '123456',
   database : 'mangadex'
+});
+const cache = require('express-expeditious')({
+  namespace: 'mangadexapi',
+  defaultTtl: '1 minute',
+  engine: require('expeditious-engine-redis')({
+    host: 'localhost',
+    port: 6379
+  }),
+  genCacheKey: (req) => {
+    const resource = req.originalUrl;
+    const method = req.method;
+
+    return `${method}-${resource}`;
+  }
 });
 
 //Configure
@@ -17,17 +30,17 @@ const config = {
   cacheFor: {
     'get:group': false,
     'get:user': false,
-    'get:manga': 15 *60,
-    'get:chapter': 15 *60,
-    'get:chapters': 5 *60
+    'get:manga': 15 *60 *1000,
+    'get:chapter': 15 *60 *1000,
+    'get:chapters': 5 *60 *1000
   }
 }
 
+//Use expeditious-cache
+app.use(cache);
+
 //Disable X-Powered-By-header
 app.disable('x-powered-by');
-
-//Make sure the cache being unavailable doesn't crash the application
-cache.on('error', (error) => { });
 
 connection.connect(function(err) {
   if (err) {
