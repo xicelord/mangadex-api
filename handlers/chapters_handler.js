@@ -59,7 +59,10 @@ function compile_get_chapters(db_chapter_results) {
     });
   });
 
-  return results;
+  return {
+    error: null,
+    chapters: results
+  }
 }
 
 //Export
