@@ -66,7 +66,7 @@ connection.connect(function(err) {
   chapters_handler(app, connection, cache, config);
 
   //Start listening
-  app.listen(3000)
+  app.listen(3000);
 });
 
 //Export app for tests

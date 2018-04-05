@@ -67,9 +67,7 @@ describe('helpers', () => {
   describe('handleCaching', () => {
     it('it should cache valid requests', () => {
       let next_called = false;
-      let next = () => {
-        next_called = true;
-      }
+      let next = null;
       let config = {cacheFor: {'get:test': 3600}};
       let resourceTitle = 'get:test';
       let cache = {
@@ -81,7 +79,6 @@ describe('helpers', () => {
       }
 
       let return_value = helpers.handleCaching(config, resourceTitle, cache)(null, null, next);
-      expect(next_called).to.be.false;
       expect(return_value).to.eql(config.cacheFor['get:test']);
     });
     it('it should respect cacheFor being false', () => {
@@ -91,13 +88,7 @@ describe('helpers', () => {
       }
       let config = {cacheFor: false};
       let resourceTitle = 'get:test';
-      let cache = {
-        withTtl: (expires) => {
-          return (req, res, next) => {
-            return expires;
-          }
-        }
-      }
+      let cache = null;
 
       let return_value = helpers.handleCaching(config, resourceTitle, cache)(null, null, next);
       expect(next_called).to.be.true;
@@ -110,13 +101,7 @@ describe('helpers', () => {
       }
       let config = {cacheFor: {'get:test': false}};
       let resourceTitle = 'get:test';
-      let cache = {
-        withTtl: (expires) => {
-          return (req, res, next) => {
-            return expires;
-          }
-        }
-      }
+      let cache = null;
 
       let return_value = helpers.handleCaching(config, resourceTitle, cache)(null, null, next);
       expect(next_called).to.be.true;
