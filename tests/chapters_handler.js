@@ -48,9 +48,9 @@ describe('chapters_handler', () => {
           done();
         });
     });
-    it('it should return the related chapters for frontpage without id (id-check only)', (done) => {
+    it('it should return the related chapters for new without id (id-check only)', (done) => {
       chai.request(app)
-        .get('/api/v1/chapters/frontpage')
+        .get('/api/v1/chapters/new')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
@@ -61,9 +61,9 @@ describe('chapters_handler', () => {
           done();
         });
     });
-    it('it should return the related chapters for frontpage with id (id-check only)', (done) => {
+    it('it should return the related chapters for new with id (id-check only)', (done) => {
       chai.request(app)
-        .get('/api/v1/chapters/frontpage/0')
+        .get('/api/v1/chapters/new/0')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);

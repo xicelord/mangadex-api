@@ -71,7 +71,7 @@ module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], helpers.handleCaching(config, 'get:chapters', cache), (req, res) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
-    let id = (origin === 'frontpage' ? 0 : helpers.filterPositiveInt(req.params.id));
+    let id = (origin === 'new' ? 0 : helpers.filterPositiveInt(req.params.id));
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
     let deleted = (req.query.deleted === '1');
     let adult = (req.query.adult === '1');
@@ -125,7 +125,7 @@ module.exports = (app, db, cache, config) => {
                 return 'mangadex_users.user_id = ' + id + ' ';
               case 'manga':
                 return 'mangadex_mangas.manga_id = ' + id + ' ';
-              case 'frontpage':
+              case 'new':
                 return '1=1 ';
             }
           })() +

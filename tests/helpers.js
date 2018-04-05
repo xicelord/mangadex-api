@@ -41,8 +41,8 @@ describe('helpers', () => {
     it('it should allow user', () => {
       expect(helpers.filterChaptersOrigin('user')).to.eql('user');
     });
-    it('it should allow frontpage', () => {
-      expect(helpers.filterChaptersOrigin('frontpage')).to.eql('frontpage');
+    it('it should allow new', () => {
+      expect(helpers.filterChaptersOrigin('new')).to.eql('new');
     });
     it('it should return null for other inputs', () => {
       expect(helpers.filterChaptersOrigin('test')).to.be.null;
