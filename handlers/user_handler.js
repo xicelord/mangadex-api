@@ -44,7 +44,8 @@ module.exports = (app, db, cache, config) => {
         'FROM mangadex_users ' +
         'LEFT JOIN mangadex_user_levels ON mangadex_users.level_id = mangadex_user_levels.level_id ' +
         'LEFT JOIN mangadex_languages ON mangadex_users.language = mangadex_languages.lang_id ' +
-        'WHERE mangadex_users.user_id = ?',
+        'WHERE mangadex_users.user_id = ?' +
+        (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
       [uid],
       (db_user_error, db_user_results, db_user_fields) => {
         if (db_user_error) {

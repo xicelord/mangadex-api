@@ -89,5 +89,29 @@ describe('group_handler', () => {
           done();
         });
     });
+    it('it should 500 the mysql_fail1-request', (done) => {
+      chai.request(app)
+        .get('/api/v1/group/8?mysql_fail1=1')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(500);
+          expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
+          expect(res.body.id).to.be.undefined;
+
+          done();
+        });
+    });
+    it('it should 500 the mysql_fail2-request', (done) => {
+      chai.request(app)
+        .get('/api/v1/group/8?mysql_fail2=1')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(500);
+          expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
+          expect(res.body.id).to.be.undefined;
+
+          done();
+        });
+    });
   });
 });

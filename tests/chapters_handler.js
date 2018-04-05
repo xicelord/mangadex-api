@@ -99,30 +99,6 @@ describe('chapters_handler', () => {
           done();
         });
     });
-    it('it should 400 the request with an invalid origin', (done) => {
-      chai.request(app)
-        .get('/api/v1/chapters/test/2')
-        .end((err, res) => {
-          expect(err).to.be.null;
-          expect(res).to.have.status(400);
-          expect(res.body.error).to.be.deep.eql({ code: 1, message: 'Invalid origin' });
-          expect(res.body.chapters).to.be.undefined;
-
-          done();
-        });
-    });
-    it('it should 400 the request with an invalid id', (done) => {
-      chai.request(app)
-        .get('/api/v1/chapters/manga/-2')
-        .end((err, res) => {
-          expect(err).to.be.null;
-          expect(res).to.have.status(400);
-          expect(res.body.error).to.be.deep.eql({ code: 1, message: 'Invalid id' });
-          expect(res.body.chapters).to.be.undefined;
-
-          done();
-        });
-    });
     it('it should respect the language-field', (done) => {
       chai.request(app)
         .get('/api/v1/chapters/manga/2?lang_ids=21')
@@ -170,6 +146,41 @@ describe('chapters_handler', () => {
           expect(res).to.have.status(200);
           expect(res.body.error).to.be.null;
           expect(res.body.chapters).to.have.length(0);
+
+          done();
+        });
+    });
+    it('it should 400 the request with an invalid origin', (done) => {
+      chai.request(app)
+        .get('/api/v1/chapters/test/2')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(400);
+          expect(res.body.error).to.be.deep.eql({ code: 1, message: 'Invalid origin' });
+          expect(res.body.chapters).to.be.undefined;
+
+          done();
+        });
+    });
+    it('it should 400 the request with an invalid id', (done) => {
+      chai.request(app)
+        .get('/api/v1/chapters/manga/-2')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(400);
+          expect(res.body.error).to.be.deep.eql({ code: 1, message: 'Invalid id' });
+          expect(res.body.chapters).to.be.undefined;
+
+          done();
+        });
+    });
+    it('it should 500 the mysql_fail-request', (done) => {
+      chai.request(app)
+        .get('/api/v1/chapters/group/8?mysql_fail=1')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(500);
+          expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
 
           done();
         });

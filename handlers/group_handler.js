@@ -64,26 +64,6 @@ function compile_get_group(db_group_result, db_members_results) {
       return members;
     })()
   };
-
-  db_group_results[0];
-  result.error = null;
-  result.members = [
-    {
-      role: 'leader',
-      user: {
-        id: result.group_leader_id,
-        name: result.username
-      }
-    }
-  ];
-  result.username = undefined;
-  result.group_leader_id = undefined;
-  result.user_id = undefined;
-
-  //Add members
-  db_members_results.forEach((member) => {
-    result.members.push(member);
-  });
 }
 
 //Export
@@ -107,7 +87,8 @@ module.exports = (app, db, cache, config) => {
         'LEFT JOIN mangadex_languages ON mangadex_groups.group_lang_id = mangadex_languages.lang_id ' +
         'LEFT JOIN mangadex_users ON mangadex_groups.group_leader_id = mangadex_users.user_id ' +
         'LEFT JOIN mangadex_user_levels ON mangadex_users.level_id = mangadex_user_levels.level_id ' +
-        'WHERE mangadex_groups.group_id = ?',
+        'WHERE mangadex_groups.group_id = ?' +
+        (process.env.NODE_ENV === 'test' && req.query.mysql_fail1 === '1' ? ' AND LIMIT 1=2' : ''),
       [gid],
       (db_group_error, db_group_results, db_group_fields) => {
         if (db_group_error) {
@@ -137,7 +118,8 @@ module.exports = (app, db, cache, config) => {
             'LEFT JOIN mangadex_users ON mangadex_users.user_id = mangadex_link_user_group.user_id ' +
             'LEFT JOIN mangadex_user_levels ON mangadex_users.level_id = mangadex_user_levels.level_id ' +
             'WHERE mangadex_link_user_group.group_id = ? ' +
-            'AND mangadex_link_user_group.role = 2',
+            'AND mangadex_link_user_group.role = 2' +
+            (process.env.NODE_ENV === 'test' && req.query.mysql_fail2 === '1' ? ' AND LIMIT 1=2' : ''),
           [gid],
           (db_members_error, db_members_results, db_members_fields) => {
             if (db_members_error) {

@@ -88,7 +88,8 @@ module.exports = (app, db, cache, config) => {
         'LEFT JOIN mangadex_groups AS g2 ON g2.group_id = mangadex_chapters.group_id_2 ' +
         'LEFT JOIN mangadex_groups AS g3 ON g3.group_id = mangadex_chapters.group_id_3 ' +
         'LEFT JOIN mangadex_languages ON mangadex_languages.lang_id = mangadex_chapters.lang_id ' +
-        'WHERE mangadex_chapters.chapter_id = ?',
+        'WHERE mangadex_chapters.chapter_id = ?' +
+        (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
       [cid],
       (db_chapter_error, db_chapter_results, db_chapter_fields) => {
         if (db_chapter_error) {

@@ -130,7 +130,8 @@ module.exports = (app, db, cache, config) => {
             }
           })() +
         'ORDER BY ' + order + ' ' +
-        'LIMIT ? OFFSET ?',
+        'LIMIT ? OFFSET ?' +
+        (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
       [limit, offset],
       (db_chapters_error, db_chapters_results, db_chapters_fields) => {
         if (db_chapters_error) {

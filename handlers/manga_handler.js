@@ -64,7 +64,8 @@ module.exports = (app, db, cache, config) => {
       'SELECT * ' +
         'FROM mangadex_mangas ' +
         'LEFT JOIN mangadex_languages ON mangadex_mangas.manga_lang_id = mangadex_languages.lang_id ' +
-        'WHERE mangadex_mangas.' + type + ' = ?',
+        'WHERE mangadex_mangas.' + type + ' = ?' +
+        (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
       [mid],
       (db_manga_error, db_manga_results, db_manga_fields) => {
         if (db_manga_error) {

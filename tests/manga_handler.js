@@ -161,5 +161,17 @@ describe('manga_handler', () => {
           done();
         });
     });
+    it('it it should 500 the mysql_fail-request', (done) => {
+      chai.request(app)
+        .get('/api/v1/manga/md/2?mysql_fail=1')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(500);
+          expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
+          expect(res.body.id).to.be.undefined;
+
+          done();
+        });
+    });
   });
 });
