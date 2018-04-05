@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha --exit ./tests/run-tests.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +17,7 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
-    "mocha": "^5.0.5"
-  },
-  "scripts": {
-    "test": "mocha ./tests/run-tests.js"
+    "mocha": "^5.0.5",
+    "nyc": "^11.6.0"
   }
 }
