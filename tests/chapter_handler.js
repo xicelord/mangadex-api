@@ -18,7 +18,7 @@ describe('chapter_handler', () => {
           expect(res).to.have.status(200);
           expect(res.body.error).to.be.null;
           expect(res.body.id).to.eql(1);
-          expect(res.body.manga).to.deep.eql({ id: 2, name: 'TEST-MANGA' });
+          expect(res.body.manga).to.deep.eql({ id: 2, name: 'Test-Manga' });
           expect(res.body.volume).to.eql('3');
           expect(res.body.chapter).to.eql('4');
           expect(res.body.title).to.eql('TEST-CHAPTER');
@@ -44,7 +44,7 @@ describe('chapter_handler', () => {
           expect(res).to.have.status(200);
           expect(res.body.error).to.be.null;
           expect(res.body.id).to.eql(33);
-          expect(res.body.manga).to.deep.eql({ id: 2, name: 'TEST-MANGA' });
+          expect(res.body.manga).to.deep.eql({ id: 2, name: 'Test-Manga' });
           expect(res.body.volume).to.eql('3');
           expect(res.body.chapter).to.eql('4');
           expect(res.body.title).to.eql('TEST-CHAPTER2');

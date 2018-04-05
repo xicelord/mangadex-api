@@ -21,7 +21,7 @@ function compile_get_manga(db_manga_result) {
       id: db_manga_result.manga_status_id,
       name: (db_manga_result.manga_status_id === 1 ? 'Ongoing' : 'Complete')
     },
-    adult: db_manga_result.manga_hentai,
+    adult: (db_manga_result.manga_hentai === 1),
     description: db_manga_result.manga_description,
     cover: db_manga_result.manga_image,
     rating: db_manga_result.manga_rating, //TODO: Map?
