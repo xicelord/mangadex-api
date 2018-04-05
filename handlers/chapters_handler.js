@@ -55,7 +55,8 @@ function compile_get_chapters(db_chapter_results) {
           name: db_chapter_result.level_name,
           color: db_chapter_result.level_colour
         }
-      }
+      },
+      deleted: (db_chapter_result.chapter_deleted === 1)
     });
   });
 
@@ -72,6 +73,7 @@ module.exports = (app, db, cache, config) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
     let id = (origin === 'frontpage' ? 0 : helpers.filterPositiveInt(req.params.id));
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
+    let deleted = (req.query.deleted === '1');
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
     let limit = 250;
@@ -113,6 +115,7 @@ module.exports = (app, db, cache, config) => {
         'LEFT JOIN mangadex_user_levels on mangadex_users.level_id = mangadex_user_levels.level_id ' +
         'WHERE ' +
           'mangadex_chapters.lang_id IN(' + lang_ids + ') AND ' +
+          (!deleted ? 'mangadex_chapters.chapter_deleted = 0 AND ' : '') +
           (!adult ? 'mangadex_mangas.manga_hentai = 0 AND ' : '') +
           (() => {
             switch(origin) {
@@ -139,11 +142,6 @@ module.exports = (app, db, cache, config) => {
             }
           });
         }
-
-        //Filter deleted chapters
-        db_chapters_results = db_chapters_results.filter((db_chapters_result) => {
-          return db_chapters_result.chapter_deleted == false;
-        });
 
         //Replay
         return res.status(200).json(compile_get_chapters(db_chapters_results));
