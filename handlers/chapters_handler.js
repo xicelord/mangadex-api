@@ -113,7 +113,7 @@ module.exports = (app, db, cache, config) => {
         'LEFT JOIN mangadex_user_levels on mangadex_users.level_id = mangadex_user_levels.level_id ' +
         'WHERE ' +
           'mangadex_chapters.lang_id IN(' + lang_ids + ') AND ' +
-          (adult ? 'mangadex_mangas.manga_hentai = 1 AND ' : 'mangadex_mangas.manga_hentai = 0 AND ') +
+          (!adult ? 'mangadex_mangas.manga_hentai = 0 AND ' : '') +
           (() => {
             switch(origin) {
               case 'group':
