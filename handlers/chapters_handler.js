@@ -7,17 +7,20 @@ function compile_get_chapters(db_chapter_results) {
   db_chapter_results.forEach((db_chapter_result) => {
     results.push({
       id: db_chapter_result.chapter_id,
-      volume: db_chapter_result.volume,
-      chapter: db_chapter_result.chapter,
-      title: db_chapter_result.title,
       manga: {
         id: db_chapter_result.manga_id,
         name: db_chapter_result.manga_name,
         cover: db_chapter_result.manga_image,
-        adult: db_chapter_result.manga_hentai
+        adult: (db_chapter_result.manga_hentai === 1)
       },
-      upload_timestamp: db_chapter_result.upload_timestamp,
-      authorised: db_chapter_result.authorised,
+      volume: db_chapter_result.volume,
+      chapter: db_chapter_result.chapter,
+      title: db_chapter_result.title,
+      language: {
+        id: db_chapter_result.lang_id,
+        name: db_chapter_result.lang_name,
+        flag: db_chapter_result.lang_flag
+      },
       group: {
         id: db_chapter_result.group_id,
         name: db_chapter_result.g1_name
@@ -42,11 +45,8 @@ function compile_get_chapters(db_chapter_results) {
           return null;
         }
       })(),
-      language: {
-        id: db_chapter_result.lang_id,
-        name: db_chapter_result.lang_name,
-        flag: db_chapter_result.lang_flag
-      },
+      upload_timestamp: db_chapter_result.upload_timestamp,
+      authorised: (db_chapter_result.authorised === 1),
       user: {
         id: db_chapter_result.user_id,
         username: db_chapter_result.username,
@@ -103,7 +103,7 @@ module.exports = (app, db, cache, config) => {
       'SELECT ' +
           'mangadex_chapters.*, mangadex_languages.*, mangadex_users.username, ' +
           'mangadex_mangas.manga_name, mangadex_mangas.manga_image, mangadex_mangas.manga_hentai, ' +
-          'mangadex_user_levels.level_name, mangadex_user_levels.level_colour, ' +
+          'mangadex_user_levels.level_id, mangadex_user_levels.level_name, mangadex_user_levels.level_colour, ' +
           'g1.group_name AS g1_name, g2.group_name AS g2_name, g3.group_name AS g3_name ' +
         'FROM mangadex_chapters ' +
         'LEFT JOIN mangadex_mangas ON mangadex_mangas.manga_id = mangadex_chapters.manga_id ' +
