@@ -37,6 +37,11 @@ module.exports = {
         lang_ids.push(filtered);
     });
 
+    //Default to 1 if no valid language was specified
+    if (lang_ids.length === 0) {
+      lang_ids = [1];
+    }
+
     return lang_ids.join(',');
   },
 
