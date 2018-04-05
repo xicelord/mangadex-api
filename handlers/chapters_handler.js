@@ -77,7 +77,7 @@ module.exports = (app, db, cache, config) => {
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
     let limit = 250;
-    let page = (helpers.filterPositiveInt(req.query.page) || 1) >= 1 ? (helpers.filterPositiveInt(req.query.page) || 1) -1 : 0;
+    let page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
     let offset = limit * page;
 
     if (origin === null) {

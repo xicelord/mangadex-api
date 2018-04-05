@@ -150,6 +150,19 @@ describe('chapters_handler', () => {
           done();
         });
     });
+    it('it should change page 0 to 1', (done) => {
+      chai.request(app)
+        .get('/api/v1/chapters/manga/2?page=0')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.body.error).to.be.null;
+          expect(res.body.chapters).to.have.length(1);
+          expect(res.body.chapters[0].id).to.eql(33);
+
+          done();
+        });
+    });
     it('it should 400 the request with an invalid origin', (done) => {
       chai.request(app)
         .get('/api/v1/chapters/test/2')
