@@ -29,6 +29,7 @@ const config = {
   endpoint: '/api/v1/',
   cacheFor: {
     'get:group': false,
+    'get:groups': 15 *60 *1000,
     'get:user': false,
     'get:manga': 15 *60 *1000,
     'get:mangas': 15 *60 *1000,
@@ -54,6 +55,7 @@ connection.connect(function(err) {
 
   //Load handlers
   const group_handler = require('./handlers/group_handler.js');
+  const groups_handler = require('./handlers/groups_handler.js');
   const user_handler = require('./handlers/user_handler.js');
   const manga_handler = require('./handlers/manga_handler.js');
   const mangas_handler = require('./handlers/mangas_handler.js');
@@ -62,6 +64,7 @@ connection.connect(function(err) {
 
   //Register handlers with express
   group_handler(app, connection, cache, config);
+  groups_handler(app, connection, cache, config);
   user_handler(app, connection, cache, config);
   manga_handler(app, connection, cache, config);
   mangas_handler(app, connection, cache, config);

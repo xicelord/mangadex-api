@@ -50,7 +50,6 @@ module.exports = (app, db, cache, config) => {
     let origin = helpers.filterMangasOrigin(req.params.origin);
     let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
     let adult = (req.query.adult === '1');
-    let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
     let limit = 100;
     let page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
     let offset = limit * page;
