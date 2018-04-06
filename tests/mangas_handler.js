@@ -92,8 +92,7 @@ describe('mangas_handler', () => {
           expect(res.body.mangas[0].follows).to.eql(67);
           expect(res.body.mangas[0].last_updated).to.eql(1600000000);
           expect(res.body.mangas[0].comments).to.eql(3);
-          expect(res.body.mangas[0].mu_id).to.eql(130177);
-          expect(res.body.mangas[0].mal_id).to.eql(99351);
+          expect(res.body.mangas[0].external_links).to.deep.eql({ mu: '130177', mal: '99351' });
           expect(res.body.mangas[0].locked).to.be.false;
 
           done();

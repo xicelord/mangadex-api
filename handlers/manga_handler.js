@@ -29,8 +29,7 @@ function compile_get_manga(db_manga_result) {
     follows: db_manga_result.manga_follows,
     last_updated: db_manga_result.manga_last_updated,
     comments: db_manga_result.manga_comments,
-    mu_id: db_manga_result.manga_mu_id,
-    mal_id: db_manga_result.manga_mal_id,
+    external_links: JSON.parse(db_manga_result.manga_links),
     locked: (db_manga_result.manga_locked === 1)
   }
 }
@@ -61,11 +60,22 @@ module.exports = (app, db, cache, config) => {
     }
 
     db.query(
-      'SELECT * ' +
-        'FROM mangadex_mangas ' +
-        'LEFT JOIN mangadex_languages ON mangadex_mangas.manga_lang_id = mangadex_languages.lang_id ' +
-        'WHERE mangadex_mangas.' + type + ' = ?' +
-        (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
+      'SELECT ' +
+        '* ' +
+      'FROM mangadex_mangas ' +
+      'LEFT JOIN mangadex_languages ON mangadex_mangas.manga_lang_id = mangadex_languages.lang_id ' +
+      'WHERE ' +
+        (() => {
+          switch (type) {
+            case 'md':
+              return 'manga_id = ' + mid;
+            case 'mu':
+              return 'manga_links->"$.mu" = "' + mid + '"';
+            case 'mal':
+              return 'manga_links->"$.mal" = "' + mid + '"';
+          }
+        })() +
+      (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
       [mid],
       (db_manga_error, db_manga_results, db_manga_fields) => {
         if (db_manga_error) {

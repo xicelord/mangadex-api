@@ -31,8 +31,7 @@ describe('manga_handler', () => {
           expect(res.body.follows).to.eql(13);
           expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
-          expect(res.body.mu_id).to.eql(130175);
-          expect(res.body.mal_id).to.eql(99349);
+          expect(res.body.external_links).to.deep.eql({ mu: '130175', mal: '99349' });
           expect(res.body.locked).to.be.false;
 
           done();
@@ -60,8 +59,7 @@ describe('manga_handler', () => {
           expect(res.body.follows).to.eql(13);
           expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
-          expect(res.body.mu_id).to.eql(130175);
-          expect(res.body.mal_id).to.eql(99349);
+          expect(res.body.external_links).to.deep.eql({ mu: '130175', mal: '99349' });
           expect(res.body.locked).to.be.false;
 
           done();
@@ -89,8 +87,7 @@ describe('manga_handler', () => {
           expect(res.body.follows).to.eql(13);
           expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
-          expect(res.body.mu_id).to.eql(130175);
-          expect(res.body.mal_id).to.eql(99349);
+          expect(res.body.external_links).to.deep.eql({ mu: '130175', mal: '99349' });
           expect(res.body.locked).to.be.false;
 
           done();
@@ -118,8 +115,7 @@ describe('manga_handler', () => {
           expect(res.body.follows).to.eql(16);
           expect(res.body.last_updated).to.eql(1499998500);
           expect(res.body.comments).to.eql(1);
-          expect(res.body.mu_id).to.eql(130176);
-          expect(res.body.mal_id).to.eql(99350);
+          expect(res.body.external_links).to.deep.eql({ mu: '130176', mal: '99350', 'raw': 'http://seiga.nicovideo.jp/comic/33785' });
           expect(res.body.locked).to.be.true;
 
           done();

@@ -6,16 +6,11 @@ module.exports = {
   },
 
   filterMangaIdType: function(value) {
-    switch (value) {
-      case 'md':
-        return 'manga_id';
-      case 'mu':
-        return 'manga_mu_id';
-      case 'mal':
-        return 'manga_mal_id';
-      default:
-        return null;
-    }
+    let valid_values = ['md', 'mu', 'mal'];
+    if (valid_values.includes(value))
+      return value;
+    else
+      return null;
   },
 
   filterChaptersOrigin: function(value) {

@@ -31,8 +31,7 @@ function compile_get_mangas(db_manga_results) {
       follows: db_manga_result.manga_follows,
       last_updated: db_manga_result.manga_last_updated,
       comments: db_manga_result.manga_comments,
-      mu_id: db_manga_result.manga_mu_id,
-      mal_id: db_manga_result.manga_mal_id,
+      external_links: JSON.parse(db_manga_result.manga_links),
       locked: (db_manga_result.manga_locked === 1)
     });
   });

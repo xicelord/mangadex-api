@@ -18,13 +18,13 @@ describe('helpers', () => {
 
   describe('filterMangaIdType', () => {
     it('it should translate md', () => {
-      expect(helpers.filterMangaIdType('md')).to.eql('manga_id');
+      expect(helpers.filterMangaIdType('md')).to.eql('md');
     });
     it('it should translate mu', () => {
-      expect(helpers.filterMangaIdType('mu')).to.eql('manga_mu_id');
+      expect(helpers.filterMangaIdType('mu')).to.eql('mu');
     });
     it('it should translate mal', () => {
-      expect(helpers.filterMangaIdType('mal')).to.eql('manga_mal_id');
+      expect(helpers.filterMangaIdType('mal')).to.eql('mal');
     });
     it('it should return null for other inputs', () => {
       expect(helpers.filterMangaIdType('test')).to.be.null;
