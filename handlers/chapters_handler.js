@@ -68,11 +68,11 @@ function compile_get_chapters(db_chapter_results) {
 
 //Export
 module.exports = (app, db, cache, config) => {
-  //GET - info about group
+  //GET - a list of chapters
   app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], helpers.handleCaching(config, 'get:chapters', cache), (req, res) => {
     let origin = helpers.filterChaptersOrigin(req.params.origin);
     let id = (origin === 'new' ? 0 : helpers.filterPositiveInt(req.params.id));
-    let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '1');
+    let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
     let deleted = (req.query.deleted === '1');
     let adult = (req.query.adult === '1');
     let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
@@ -114,7 +114,7 @@ module.exports = (app, db, cache, config) => {
         'LEFT JOIN mangadex_users ON mangadex_chapters.user_id = mangadex_users.user_id ' +
         'LEFT JOIN mangadex_user_levels on mangadex_users.level_id = mangadex_user_levels.level_id ' +
         'WHERE ' +
-          'mangadex_chapters.lang_id IN(' + lang_ids + ') AND ' +
+          (lang_ids.length !== 0 ? 'mangadex_chapters.lang_id IN(' + lang_ids + ') AND ' : '') +
           (!deleted ? 'mangadex_chapters.chapter_deleted = 0 AND ' : '') +
           (!adult ? 'mangadex_mangas.manga_hentai = 0 AND ' : '') +
           (() => {

@@ -32,20 +32,35 @@ describe('helpers', () => {
   });
 
   describe('filterChaptersOrigin', () => {
-    it('it should allow group', () => {
+    it('it should allow "group"', () => {
       expect(helpers.filterChaptersOrigin('group')).to.eql('group');
     });
-    it('it should allow manga', () => {
+    it('it should allow "manga"', () => {
       expect(helpers.filterChaptersOrigin('manga')).to.eql('manga');
     });
-    it('it should allow user', () => {
+    it('it should allow "user"', () => {
       expect(helpers.filterChaptersOrigin('user')).to.eql('user');
     });
-    it('it should allow new', () => {
+    it('it should allow "new"', () => {
       expect(helpers.filterChaptersOrigin('new')).to.eql('new');
     });
     it('it should return null for other inputs', () => {
       expect(helpers.filterChaptersOrigin('test')).to.be.null;
+    });
+  });
+
+  describe('filterMangasOrigin', () => {
+    it('it should allow "all"', () => {
+      expect(helpers.filterMangasOrigin('all')).to.eql('all');
+    });
+    it('it should allow "updated"', () => {
+      expect(helpers.filterMangasOrigin('updated')).to.eql('updated');
+    });
+    it('it should allow "new"', () => {
+      expect(helpers.filterMangasOrigin('new')).to.eql('new');
+    });
+    it('it should return null for other inputs', () => {
+      expect(helpers.filterMangasOrigin('test')).to.be.null;
     });
   });
 
@@ -59,8 +74,8 @@ describe('helpers', () => {
     it('it should filter out letters', () => {
       expect(helpers.filterLanguageIDs('1,2,a')).to.eql('1,2');
     });
-    it('it should return 1 if no valid integers were specified', () => {
-      expect(helpers.filterLanguageIDs('-1,a')).to.eql('1');
+    it('it should return "" if no valid integers were specified', () => {
+      expect(helpers.filterLanguageIDs('-1,a')).to.deep.eql('');
     });
   });
 
