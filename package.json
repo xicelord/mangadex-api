@@ -8,7 +8,7 @@
     "coverage": "nyc mocha --exit ./tests/run-tests.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT
   "dependencies": {
     "expeditious-engine-redis": "^0.1.1",
     "express": "^4.16.2",
