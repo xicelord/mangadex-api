@@ -26,7 +26,7 @@ function compile_get_user(db_user_result) {
 
 //Export
 module.exports = (app, db, cache, config) => {
-  //GET - info about group
+  //GET - data about user
   app.get(config.endpoint + 'user/:uid', helpers.handleCaching(config, 'get:user', cache), (req, res) => {
     let uid = helpers.filterPositiveInt(req.params.uid);
 

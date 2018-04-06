@@ -31,6 +31,7 @@ const config = {
     'get:group': false,
     'get:user': false,
     'get:manga': 15 *60 *1000,
+    'get:mangas': 15 *60 *1000,
     'get:chapter': 15 *60 *1000,
     'get:chapters': 5 *60 *1000
   }
@@ -55,6 +56,7 @@ connection.connect(function(err) {
   const group_handler = require('./handlers/group_handler.js');
   const user_handler = require('./handlers/user_handler.js');
   const manga_handler = require('./handlers/manga_handler.js');
+  const mangas_handler = require('./handlers/mangas_handler.js');
   const chapter_handler = require('./handlers/chapter_handler.js');
   const chapters_handler = require('./handlers/chapters_handler.js');
 
@@ -62,6 +64,7 @@ connection.connect(function(err) {
   group_handler(app, connection, cache, config);
   user_handler(app, connection, cache, config);
   manga_handler(app, connection, cache, config);
+  mangas_handler(app, connection, cache, config);
   chapter_handler(app, connection, cache, config);
   chapters_handler(app, connection, cache, config);
 

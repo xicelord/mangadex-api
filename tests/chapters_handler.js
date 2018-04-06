@@ -199,6 +199,7 @@ describe('chapters_handler', () => {
           expect(err).to.be.null;
           expect(res).to.have.status(500);
           expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
+          expect(res.body.chapters).to.be.undefined;
 
           done();
         });

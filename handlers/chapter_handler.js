@@ -66,7 +66,7 @@ function compile_get_chapter(db_chapter_result) {
 
 //Export
 module.exports = (app, db, cache, config) => {
-  //GET - info about group
+  //GET - data of a chapter
   app.get(config.endpoint + 'chapter/:cid', helpers.handleCaching(config, 'get:chapter', cache), (req, res) => {
     let cid = helpers.filterPositiveInt(req.params.cid);
 

@@ -26,6 +26,14 @@ module.exports = {
       return null;
   },
 
+  filterMangasOrigin: function(value) {
+    let valid_values = ['all', 'updated', 'new'];
+    if (valid_values.includes(value))
+      return value;
+    else
+      return null;
+  },
+
   filterLanguageIDs: function(value) {
     let lang_ids = [];
 
@@ -36,11 +44,6 @@ module.exports = {
       if (!isNaN(filtered))
         lang_ids.push(filtered);
     });
-
-    //Default to 1 if no valid language was specified
-    if (lang_ids.length === 0) {
-      lang_ids = [1];
-    }
 
     return lang_ids.join(',');
   },

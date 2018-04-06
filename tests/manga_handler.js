@@ -29,7 +29,7 @@ describe('manga_handler', () => {
           expect(res.body.rating).to.eql(0);
           expect(res.body.views).to.eql(12);
           expect(res.body.follows).to.eql(13);
-          expect(res.body.last_updated).to.eql(1499998000);
+          expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
           expect(res.body.mu_id).to.eql(130175);
           expect(res.body.mal_id).to.eql(99349);
@@ -58,7 +58,7 @@ describe('manga_handler', () => {
           expect(res.body.rating).to.eql(0);
           expect(res.body.views).to.eql(12);
           expect(res.body.follows).to.eql(13);
-          expect(res.body.last_updated).to.eql(1499998000);
+          expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
           expect(res.body.mu_id).to.eql(130175);
           expect(res.body.mal_id).to.eql(99349);
@@ -87,7 +87,7 @@ describe('manga_handler', () => {
           expect(res.body.rating).to.eql(0);
           expect(res.body.views).to.eql(12);
           expect(res.body.follows).to.eql(13);
-          expect(res.body.last_updated).to.eql(1499998000);
+          expect(res.body.last_updated).to.eql(1600000001);
           expect(res.body.comments).to.eql(0);
           expect(res.body.mu_id).to.eql(130175);
           expect(res.body.mal_id).to.eql(99349);

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha --exit ./tests/run-tests.js"
+    "test": "mocha --exit ./tests/run-tests.js",
+    "coverage": "nyc mocha --exit ./tests/run-tests.js"
   },
   "author": "",
   "license": "ISC",
