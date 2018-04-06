@@ -1,14 +1,19 @@
 const helpers = require('../helpers.js');
 
 //Result functions
-function compile_get_manga(db_manga_result) {
+function compile_get_manga(db_manga_result, db_manga_alt_names_results) {
   return {
     error: null,
     id: db_manga_result.manga_id,
     name: db_manga_result.manga_name,
     alt_names: (() => {
-      //TODO: Implement
-      return [];
+      let alt_names = [];
+
+      db_manga_alt_names_results.forEach((manga_alt_names_result) => {
+        alt_names.push(manga_alt_names_result.alt_name);
+      });
+
+      return alt_names;
     })(),
     author: db_manga_result.manga_author,
     artist: db_manga_result.manga_artist,
@@ -75,7 +80,7 @@ module.exports = (app, db, cache, config) => {
               return 'manga_links->"$.mal" = "' + mid + '"';
           }
         })() +
-      (process.env.NODE_ENV === 'test' && req.query.mysql_fail === '1' ? ' AND LIMIT 1=2' : ''),
+      (process.env.NODE_ENV === 'test' && req.query.mysql_fail1 === '1' ? ' AND LIMIT 1=2' : ''),
       [mid],
       (db_manga_error, db_manga_results, db_manga_fields) => {
         if (db_manga_error) {
@@ -98,8 +103,26 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Replay
-        return res.status(200).json(compile_get_manga(db_manga_results[0]));
+        //Fetch alt_names
+        db.query(
+          'SELECT alt_name FROM mangadex_manga_alt_names WHERE manga_id = ?' +
+          (process.env.NODE_ENV === 'test' && req.query.mysql_fail2 === '1' ? ' AND LIMIT 1=2' : ''),
+          [mid],
+          (db_manga_alt_names_error, db_manga_alt_names_results, db_manga_alt_names_fields) => {
+            if (db_manga_alt_names_error) {
+              //TODO: Log
+              return res.status(500).json({
+                error: {
+                  code: 1, //TODO
+                  message: 'Internal server error'
+                }
+              });
+            }
+
+            //Reply
+            return res.status(200).json(compile_get_manga(db_manga_results[0], db_manga_alt_names_results));
+          }
+        );
       }
     );
   });

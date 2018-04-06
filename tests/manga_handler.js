@@ -102,7 +102,7 @@ describe('manga_handler', () => {
           expect(res.body.error).to.be.null;
           expect(res.body.id).to.eql(14);
           expect(res.body.name).to.eql('Test-Manga-ADULT');
-          expect(res.body.alt_names).to.eql([]);
+          expect(res.body.alt_names).to.eql(['Alternative Name', 'Another Alternative Name']);
           expect(res.body.author).to.eql('Test Authorx');
           expect(res.body.artist).to.eql('Test Artist');
           expect(res.body.language).to.deep.eql({ id: 21, name: 'Chinese', flag: 'cn' });
@@ -157,9 +157,21 @@ describe('manga_handler', () => {
           done();
         });
     });
-    it('it it should 500 the mysql_fail-request', (done) => {
+    it('it it should 500 the mysql_fail1-request', (done) => {
       chai.request(app)
-        .get('/api/v1/manga/md/2?mysql_fail=1')
+        .get('/api/v1/manga/md/2?mysql_fail1=1')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(500);
+          expect(res.body.error).to.deep.eql({ code: 1, message: 'Internal server error' });
+          expect(res.body.id).to.be.undefined;
+
+          done();
+        });
+    });
+    it('it it should 500 the mysql_fail2-request', (done) => {
+      chai.request(app)
+        .get('/api/v1/manga/md/2?mysql_fail2=1')
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(500);
