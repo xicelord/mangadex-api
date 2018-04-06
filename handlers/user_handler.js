@@ -68,7 +68,7 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Replay
+        //Reply
         return res.status(200).json(compile_get_user(db_user_results[0]));
       }
     );

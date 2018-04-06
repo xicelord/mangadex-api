@@ -68,7 +68,7 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Replay
+        //Reply
         return res.status(200).json(compile_get_groups(db_groups_results));
       }
     );

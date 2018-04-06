@@ -95,7 +95,7 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Replay
+        //Reply
         return res.status(200).json(compile_get_mangas(db_mangas_results));
       }
     );

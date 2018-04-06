@@ -122,7 +122,7 @@ module.exports = (app, db, cache, config) => {
           });
         }
 
-        //Replay
+        //Reply
         return res.status(200).json(compile_get_chapter(db_chapter_results[0]));
       }
     );
