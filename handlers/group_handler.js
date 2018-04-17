@@ -29,7 +29,7 @@ function compile_get_group(db_group_result, db_members_results) {
     control: (db_group_result.group_control === 1),
     delay: db_group_result.group_delay,
     members: (() => {
-      let members = [];
+      const members = [];
 
       //Add leader
       members.push({
@@ -70,9 +70,9 @@ function compile_get_group(db_group_result, db_members_results) {
 module.exports = (app, db, cache, config) => {
   //GET - info about group
   app.get(config.endpoint + 'group/:gid', helpers.handleCaching(config, 'get:group', cache), (req, res) => {
-    let gid = helpers.filterPositiveInt(req.params.gid);
+    const gid = helpers.filterPositiveInt(req.params.gid);
 
-    if (isNaN(gid)) {
+    if (isNaN(gid) || gid < 1) {
       return res.status(400).json({
         error: {
           code: 1, //TODO

@@ -85,12 +85,12 @@ describe('chapter_handler', () => {
           done();
         });
     });
-    it('it should 403 the request for a deleted chapter', (done) => {
+    it('it should 410 the request for a deleted chapter', (done) => {
       chai.request(app)
         .get('/api/v1/chapter/11')
         .end((err, res) => {
           expect(err).to.be.null;
-          expect(res).to.have.status(403);
+          expect(res).to.have.status(410);
           expect(res.body.error).to.deep.eql({ code: 1, message: 'Chapter has been deleted' });
           expect(res.body.id).to.be.undefined;
 

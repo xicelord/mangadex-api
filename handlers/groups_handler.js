@@ -2,10 +2,8 @@ const helpers = require('../helpers.js');
 
 //Result functions
 function compile_get_groups(db_group_results) {
-  let results = [];
-
-  db_group_results.forEach((db_group_result) => {
-    results.push({
+  const groups = db_group_results.map((db_group_result) => {
+    return {
       id: db_group_result.group_id,
       name: db_group_result.group_name,
       website: db_group_result.group_website,
@@ -27,12 +25,12 @@ function compile_get_groups(db_group_results) {
       follows: db_group_result.group_follows,
       views: db_group_result.group_views,
       description: db_group_result.group_description
-    });
+    }
   });
 
   return {
     error: null,
-    groups: results
+    groups: groups
   }
 }
 
@@ -40,10 +38,10 @@ function compile_get_groups(db_group_results) {
 module.exports = (app, db, cache, config) => {
   //GET - list of groups
   app.get(config.endpoint + 'groups', helpers.handleCaching(config, 'get:groups', cache), (req, res) => {
-    let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
-    let limit = 250;
-    let page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
-    let offset = limit * page;
+    const lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
+    const limit = 250;
+    const page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
+    const offset = limit * page;
 
     db.query(
       'SELECT ' +

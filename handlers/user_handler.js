@@ -28,9 +28,9 @@ function compile_get_user(db_user_result) {
 module.exports = (app, db, cache, config) => {
   //GET - data about user
   app.get(config.endpoint + 'user/:uid', helpers.handleCaching(config, 'get:user', cache), (req, res) => {
-    let uid = helpers.filterPositiveInt(req.params.uid);
+    const uid = helpers.filterPositiveInt(req.params.uid);
 
-    if (isNaN(uid)) {
+    if (isNaN(uid) || uid < 1) {
       return res.status(400).json({
         error: {
           code: 1, //TODO

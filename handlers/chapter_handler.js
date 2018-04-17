@@ -49,18 +49,13 @@ function compile_get_chapter(db_chapter_result) {
         return null;
       }
     })(),
-    pages: (() => {
-      var pages = [];
-
-      db_chapter_result.page_order.split(',').forEach((page) => {
+    pages:
+      db_chapter_result.page_order.split(',').map((page) => {
         if (db_chapter_result.server)
-          pages.push('https://s' + db_chapter_result.server + '.mangadex.org/' + db_chapter_result.chapter_hash + '/' + page);
+          return 'https://s' + db_chapter_result.server + '.mangadex.org/' + db_chapter_result.chapter_hash + '/' + page;
         else
-          pages.push('https://mangadex.org/data/' + db_chapter_result.chapter_hash + '/' + page);
-      });
-
-      return pages;
-    })()
+          return 'https://mangadex.org/data/' + db_chapter_result.chapter_hash + '/' + page;
+      })
   }
 }
 
@@ -68,9 +63,9 @@ function compile_get_chapter(db_chapter_result) {
 module.exports = (app, db, cache, config) => {
   //GET - data of a chapter
   app.get(config.endpoint + 'chapter/:cid', helpers.handleCaching(config, 'get:chapter', cache), (req, res) => {
-    let cid = helpers.filterPositiveInt(req.params.cid);
+    const cid = helpers.filterPositiveInt(req.params.cid);
 
-    if (isNaN(cid)) {
+    if (isNaN(cid) || cid < 1) {
       return res.status(400).json({
         error: {
           code: 1, //TODO
@@ -114,7 +109,7 @@ module.exports = (app, db, cache, config) => {
 
         //Deleted?
         if (db_chapter_results[0].chapter_deleted) {
-          return res.status(403).json({
+          return res.status(410).json({
             error: {
               code: 1, //TODO
               message: 'Chapter has been deleted'

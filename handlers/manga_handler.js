@@ -6,15 +6,10 @@ function compile_get_manga(db_manga_result, db_manga_alt_names_results) {
     error: null,
     id: db_manga_result.manga_id,
     name: db_manga_result.manga_name,
-    alt_names: (() => {
-      let alt_names = [];
-
-      db_manga_alt_names_results.forEach((manga_alt_names_result) => {
-        alt_names.push(manga_alt_names_result.alt_name);
-      });
-
-      return alt_names;
-    })(),
+    alt_names:
+      db_manga_alt_names_results.map((manga_alt_names_result) => {
+        return manga_alt_names_result.alt_name;
+      }),
     author: db_manga_result.manga_author,
     artist: db_manga_result.manga_artist,
     language: {
@@ -43,8 +38,8 @@ function compile_get_manga(db_manga_result, db_manga_alt_names_results) {
 module.exports = (app, db, cache, config) => {
   //GET - info of a manga
   app.get(config.endpoint + 'manga/:type/:mid', helpers.handleCaching(config, 'get:manga', cache), (req, res) => {
-    let type = helpers.filterMangaIdType(req.params.type);
-    let mid = helpers.filterPositiveInt(req.params.mid);
+    const type = helpers.filterMangaIdType(req.params.type);
+    const mid = helpers.filterPositiveInt(req.params.mid);
 
     if (type === null) {
       return res.status(400).json({
@@ -55,7 +50,7 @@ module.exports = (app, db, cache, config) => {
       });
     }
 
-    if (isNaN(mid)) {
+    if (isNaN(mid) || mid < 1) {
       return res.status(400).json({
         error: {
           code: 1, //TODO

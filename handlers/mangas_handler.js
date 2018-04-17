@@ -2,10 +2,8 @@ const helpers = require('../helpers.js');
 
 //Result functions
 function compile_get_mangas(db_manga_results) {
-  let results = [];
-
-  db_manga_results.forEach((db_manga_result) => {
-    results.push({
+  const mangas = db_manga_results.map((db_manga_result) => {
+    return {
       id: db_manga_result.manga_id,
       name: db_manga_result.manga_name,
       alt_names: (() => {
@@ -33,12 +31,12 @@ function compile_get_mangas(db_manga_results) {
       comments: db_manga_result.manga_comments,
       external_links: JSON.parse(db_manga_result.manga_links),
       locked: (db_manga_result.manga_locked === 1)
-    });
+    }
   });
 
   return {
     error: null,
-    mangas: results
+    mangas: mangas
   }
 }
 
@@ -46,12 +44,12 @@ function compile_get_mangas(db_manga_results) {
 module.exports = (app, db, cache, config) => {
   //GET - get a list of mangas
   app.get(config.endpoint + 'mangas/:origin', helpers.handleCaching(config, 'get:mangas', cache), (req, res) => {
-    let origin = helpers.filterMangasOrigin(req.params.origin);
-    let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
-    let adult = (req.query.adult === '1');
-    let limit = 100;
-    let page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
-    let offset = limit * page;
+    const origin = helpers.filterMangasOrigin(req.params.origin);
+    const lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
+    const adult = (req.query.adult === '1');
+    const limit = 100;
+    const page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
+    const offset = limit * page;
 
     if (origin === null) {
       return res.status(400).json({

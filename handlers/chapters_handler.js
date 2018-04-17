@@ -2,10 +2,8 @@ const helpers = require('../helpers.js');
 
 //Result functions
 function compile_get_chapters(db_chapter_results) {
-  let results = [];
-
-  db_chapter_results.forEach((db_chapter_result) => {
-    results.push({
+  const chapters = db_chapter_results.map((db_chapter_result) => {
+    return {
       id: db_chapter_result.chapter_id,
       manga: {
         id: db_chapter_result.manga_id,
@@ -57,12 +55,12 @@ function compile_get_chapters(db_chapter_results) {
         }
       },
       deleted: (db_chapter_result.chapter_deleted === 1)
-    });
+    }
   });
 
   return {
     error: null,
-    chapters: results
+    chapters: chapters
   }
 }
 
@@ -70,15 +68,15 @@ function compile_get_chapters(db_chapter_results) {
 module.exports = (app, db, cache, config) => {
   //GET - a list of chapters
   app.get([config.endpoint + 'chapters/:origin/:id', config.endpoint + 'chapters/:origin'], helpers.handleCaching(config, 'get:chapters', cache), (req, res) => {
-    let origin = helpers.filterChaptersOrigin(req.params.origin);
-    let id = (origin === 'new' ? 0 : helpers.filterPositiveInt(req.params.id));
-    let lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
-    let deleted = (req.query.deleted === '1');
-    let adult = (req.query.adult === '1');
-    let order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
-    let limit = 250;
-    let page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
-    let offset = limit * page;
+    const origin = helpers.filterChaptersOrigin(req.params.origin);
+    const id = (origin === 'new' ? 0 : helpers.filterPositiveInt(req.params.id));
+    const lang_ids = helpers.filterLanguageIDs(req.query.lang_ids || '');
+    const deleted = (req.query.deleted === '1');
+    const adult = (req.query.adult === '1');
+    const order = 'upload_timestamp desc'; //SET TO SAFE INPUT ONLY!
+    const limit = 250;
+    const page = (helpers.filterPositiveInt(req.query.page) || 1) -1; //Note: page 0 will default to 1 - (0 || 1) === 1
+    const offset = limit * page;
 
     if (origin === null) {
       return res.status(400).json({
